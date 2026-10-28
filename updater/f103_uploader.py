@@ -32,6 +32,7 @@ CMD_DATA = 3
 CMD_END = 4
 CMD_RUN = 5
 CMD_ENTER_BOOTLOADER = 6
+CMD_ENTER_ROM_BOOTLOADER = 7
 
 ROLE_BOOTLOADER = 1
 ROLE_APPLICATION = 2
@@ -65,6 +66,19 @@ def emit(message: str, callback: Callable[[str], None] | None = None) -> None:
         print(message, flush=True)
 
 
+def drain_reports(dev: hid.device, max_reports: int = 8) -> None:
+    """Discard stale IN reports left by an interrupted session."""
+    try:
+        dev.set_nonblocking(1)
+        for _ in range(max_reports):
+            if not dev.read(REPORT_SIZE):
+                break
+    except OSError:
+        pass
+    finally:
+        dev.set_nonblocking(0)
+
+
 def find_iap_device(timeout: float,
                     log_cb: Callable[[str], None] | None = None
                     ) -> tuple[hid.device, dict]:
@@ -82,6 +96,7 @@ def find_iap_device(timeout: float,
             dev = hid.device()
             dev.open_path(info["path"])
             dev.set_nonblocking(0)
+            drain_reports(dev)
             return dev, info
 
         if not announced:
@@ -128,18 +143,21 @@ def transact(dev: hid.device, command: int, sequence: int,
     if written != REPORT_SIZE:
         raise UploadError(f"HID write returned {written}, expected {REPORT_SIZE}")
 
-    response = normalize_response(dev.read(REPORT_SIZE, timeout_ms))
+    deadline = time.monotonic() + timeout_ms / 1000.0
+    response = b""
+    while True:
+        remaining_ms = max(int((deadline - time.monotonic()) * 1000), 1)
+        response = normalize_response(dev.read(REPORT_SIZE, remaining_ms))
+        if response[2] == command and response[3] == sequence:
+            break
+        if time.monotonic() >= deadline:
+            raise UploadError(
+                f"response mismatch: command {response[2]}, "
+                f"sequence {response[3]}"
+            )
+
     status = response[1]
-    echoed_command = response[2]
-    echoed_sequence = response[3]
     value = struct.unpack_from("<I", response, 4)[0]
-
-    if echoed_command != command or echoed_sequence != sequence:
-        raise UploadError(
-            f"response mismatch: command {echoed_command}, "
-            f"sequence {echoed_sequence}"
-        )
-
     return status, value, response[8:]
 
 
@@ -218,6 +236,7 @@ def request_bootloader(dev: hid.device, info: dict, wait: float,
             try:
                 candidate.open_path(candidate_info["path"])
                 candidate.set_nonblocking(0)
+                drain_reports(candidate)
                 _version, candidate_extra = ping(candidate)
                 role = device_role(candidate_extra)
                 if role in (0, ROLE_BOOTLOADER):
@@ -351,6 +370,32 @@ def upload(dev: hid.device, firmware: bytes, run: bool,
         emit("应用启动命令已发送（扇区交换约需数秒，请稍候）", log_cb)
 
 
+def enter_rom_bootloader(wait: float = 20.0,
+              log_cb: Callable[[str], None] | None = None) -> None:
+    """Ask the bootloader to jump into the factory STM32 USB DFU."""
+    dev, info = find_iap_device(wait, log_cb)
+    try:
+        product = info.get("product_string") or "F103 device"
+        emit(f"已连接 {product}", log_cb)
+
+        _version, extra = ping(dev)
+        role = device_role(extra)
+        if role == ROLE_APPLICATION:
+            dev, info = request_bootloader(dev, info, wait, log_cb)
+            _version, extra = ping(dev)
+            role = device_role(extra)
+        if role != ROLE_BOOTLOADER:
+            raise UploadError("device is not in the bootloader")
+
+        status, _value, _extra = transact(dev, CMD_ENTER_ROM_BOOTLOADER, 0xFC)
+        check_status(status, "enter DFU")
+        emit("Bootloader 已请求进入 STM32 系统存储器 DFU", log_cb)
+        emit("设备将重新枚举为 STM32 BOOTLOADER (0483:DF11)", log_cb)
+        emit("请使用 STM32CubeProgrammer（USB）重新烧录 Bootloader", log_cb)
+    finally:
+        dev.close()
+
+
 def perform_update(firmware: bytes, wait: float = 20.0,
                    run: bool = True,
                    log_cb: Callable[[str], None] | None = None,
@@ -381,7 +426,7 @@ def main() -> int:
         description="Upload a firmware image to the F103 USB HID bootloader"
     )
     parser.add_argument(
-        "firmware", type=Path,
+        "firmware", type=Path, nargs="?",
         help="firmware single-linked for slot A (.bin); the bootloader "
              "downloads it into slot B and swaps it into slot A"
     )
@@ -396,7 +441,26 @@ def main() -> int:
         action="store_true",
         help="stay in the bootloader after a successful update",
     )
+    parser.add_argument(
+        "--enter-rom",
+        action="store_true",
+        help="jump to the factory STM32 USB DFU for bootloader recovery "
+             "(no firmware download)",
+    )
     args = parser.parse_args()
+
+    if args.enter_rom:
+        try:
+            enter_rom_bootloader(args.wait)
+        except (UploadError, OSError) as exc:
+            print(f"\nerror: {exc}", file=sys.stderr)
+            return 1
+        return 0
+
+    if args.firmware is None:
+        print("error: firmware file is required unless --enter-dfu is used",
+              file=sys.stderr)
+        return 2
 
     try:
         firmware = args.firmware.read_bytes()

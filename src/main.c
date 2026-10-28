@@ -94,6 +94,42 @@ static void jump_to_application(uint32_t base)
 	__builtin_unreachable();
 }
 
+/*
+ * Jump into the STM32 factory system-memory bootloader (USB DFU). This is
+ * the field recovery path for updating the bootloader itself without SWD:
+ * the factory DFU is resident in ROM and cannot be bricked by our code.
+ */
+#define F103_SYSTEM_MEMORY 0x1FFFF000U
+
+static void jump_to_system_dfu(void)
+{
+	__disable_irq();
+
+	SysTick->CTRL = 0U;
+	SysTick->LOAD = 0U;
+	SysTick->VAL = 0U;
+
+	for (uint32_t i = 0U; i < (sizeof(NVIC->ICER) / sizeof(NVIC->ICER[0])); i++) {
+		NVIC->ICER[i] = 0xFFFFFFFFU;
+		NVIC->ICPR[i] = 0xFFFFFFFFU;
+	}
+
+	__DSB();
+	__ISB();
+
+	const uint32_t sp = *(volatile const uint32_t *)F103_SYSTEM_MEMORY;
+	const uint32_t pc = *(volatile const uint32_t *)(F103_SYSTEM_MEMORY + 4U);
+
+	__asm volatile(
+		"msr msp, %[sp]\n\t"
+		"bx %[pc]\n\t"
+		:
+		: [sp] "r" (sp), [pc] "r" (pc)
+		: "memory");
+
+	__builtin_unreachable();
+}
+
 static int send_report(const uint8_t *report, size_t length)
 {
 	uint32_t written = 0U;
@@ -141,6 +177,7 @@ static void process_request(const uint8_t *request, size_t length)
 	uint32_t value = 0U;
 	uint8_t extra[30] = {0U};
 	bool run_after_response = false;
+	bool dfu_after_response = false;
 	int err = 0;
 
 	if (length > 0U && request[0] == F103_HID_REPORT_ID_OUT) {
@@ -165,8 +202,6 @@ static void process_request(const uint8_t *request, size_t length)
 		status = F103_IAP_ERR_ARG;
 		goto respond;
 	}
-
-	upgrade_session = true;
 
 	switch (command) {
 	case F103_IAP_PING:
@@ -218,6 +253,12 @@ static void process_request(const uint8_t *request, size_t length)
 		break;
 
 	case F103_IAP_BEGIN:
+		/*
+		 * Only a real download session may keep the bootloader in its
+		 * USB window. A passively polling host (PING) must not prevent
+		 * the automatic jump to the application.
+		 */
+		upgrade_session = true;
 		err = flash_update_begin(address);
 		if (err == -EINVAL) {
 			status = F103_IAP_ERR_ARG;
@@ -251,6 +292,9 @@ static void process_request(const uint8_t *request, size_t length)
 			status = F103_IAP_ERR_CRC;
 		} else if (err == -EIO) {
 			status = F103_IAP_ERR_FLASH;
+		} else if (err == -EINVAL) {
+			/* no active session / incomplete download */
+			status = F103_IAP_ERR_STATE;
 		} else if (err < 0) {
 			status = F103_IAP_ERR_IMAGE;
 		}
@@ -265,6 +309,10 @@ static void process_request(const uint8_t *request, size_t length)
 		}
 		break;
 
+	case F103_IAP_ENTER_ROM_BOOTLOADER:
+		dfu_after_response = true;
+		break;
+
 	default:
 		status = F103_IAP_ERR_COMMAND;
 		break;
@@ -274,6 +322,14 @@ respond:
 	err = send_response(command, sequence, status, value, extra, sizeof(extra));
 	if (err == 0 && run_after_response) {
 		run_requested = true;
+	}
+	if (err == 0 && dfu_after_response) {
+		k_sleep(K_MSEC(100));
+		(void)usb_disable();
+		/* Force a real disconnect so the host enumerates the ROM DFU. */
+		usb_disconnect_dp();
+		k_sleep(K_MSEC(500));
+		jump_to_system_dfu();
 	}
 }
 

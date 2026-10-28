@@ -1,0 +1,26 @@
+// STM32F103 option bytes: RDP level 1 + write-protect bootloader pages 0-31.
+//
+// !!! WARNING !!!
+// This permanently changes the chip's option bytes:
+//   - RDP level 1 blocks debugger flash reads; removing it forces a mass erase.
+//   - WRP protects pages 0-31 (the 32 KiB bootloader) from erase/program.
+// Verify on a sacrificial board first. Development boards should stay unprotected.
+//
+// Reference only - not executed by any automated script.
+connect
+halt
+// Unlock FPEC
+w4 0x40022004, 0x45670123
+w4 0x40022004, 0xCDEF89AB
+// Enable option byte programming (OPTWRE, bit 9)
+w4 0x40022010, 0x00000200
+// RDP = 0x00 (level 1) with complement 0xFF
+w2 0x1FFFF800, 0x00FF
+// USER option byte: keep defaults
+w2 0x1FFFF802, 0xFF00
+// WRP0 = 0x0000 protects pages 0-31 (2 pages per bit)
+w2 0x1FFFF808, 0x0000
+// WRP1..3 untouched (unprotected)
+r
+g
+q

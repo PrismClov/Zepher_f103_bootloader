@@ -169,6 +169,14 @@ HID 使用 Vendor Usage Page `0xFF00` 和 64 字节中断端点：
 
 命令包括 `PING`、`BEGIN`、`DATA`、`END`、`RUN` 和 `ENTER_BOOTLOADER`。
 
+## 安全、量产与验证文档
+
+- [SECURITY.md](SECURITY.md) — 威胁模型、无签名风险、RDP/WRP 与调试口策略
+- [PRODUCTION.md](PRODUCTION.md) — 发布构建、VID/PID、代码签名、量产烧录、Bootloader 自更新/恢复、Flash 寿命、许可证清单
+- [docs/FAULT_INJECTION.md](docs/FAULT_INJECTION.md) — 防掉电/故障注入测试矩阵与实板结果
+- `build-release.ps1` — 注入合法 VID/PID 并可选签名上位机
+- `tools/test/protocol_negative.py` — 协议负向测试（10 项）
+
 ## 注意事项
 
 - `0x1209:0xF103` 仅用于原型验证，正式产品应换成自己合法持有的 USB VID/PID。

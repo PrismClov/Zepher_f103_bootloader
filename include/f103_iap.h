@@ -64,6 +64,7 @@ enum f103_iap_cmd {
 	F103_IAP_END = 4,
 	F103_IAP_RUN = 5,
 	F103_IAP_ENTER_BOOTLOADER = 6,
+	F103_IAP_ENTER_ROM_BOOTLOADER = 7,
 };
 
 enum f103_iap_role {
