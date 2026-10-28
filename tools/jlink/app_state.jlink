@@ -1,0 +1,5 @@
+connect
+halt
+regs
+mem32 0x40010800, 4
+q

@@ -1,0 +1,8 @@
+connect
+r
+bp 0x080003F0
+g
+regs
+mem 0x40021000, 0x30
+mem 0x40005c40, 16
+q

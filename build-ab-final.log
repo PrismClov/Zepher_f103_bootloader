@@ -1,0 +1,693 @@
+-- west build: making build dir C:\Users\Administrator\Desktop\f103_usb_bootloader\build\bootloader pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/Users/Administrator/Desktop/f103_usb_bootloader
+-- CMake version: 4.4.4
+-- Found Python3: C:/Users/Administrator/Desktop/f103_usb_bootloader/.venv/Scripts/python.exe (found suitable version "3.12.14", minimum required is "3.12") found components: Interpreter
+-- Cache files will be written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/.cache
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr)
+-- Found west (found suitable version "1.5.0", minimum required is "0.14.0")
+-- Board: stm32_min_dev, Revision: blue, qualifiers: stm32f103xb
+-- Found toolchain: gnuarmemb (C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.2 rel1)
+-- Could NOT find Dtc (missing: DTC) (Required is at least version "1.4.6")
+Hint: The project() command has not yet been called.  It sets up system-specific search paths.
+-- Found BOARD.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev.dts
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_stm32f103xb_blue.overlay
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/app.overlay
+-- Generated zephyr.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/zephyr.dts
+-- Generated pickled edt: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/edt.pickle
+-- Generated devicetree_generated.h: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/include/generated/zephyr/devicetree_generated.h
+Parsing C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/Kconfig
+Loaded configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_defconfig'
+Merged configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/prj.conf'
+Configuration saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/.config'
+Kconfig header saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/include/generated/zephyr/autoconf.h'
+-- Found GnuLd: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/bin/ld.bfd.exe (found version "2.43.1")
+-- The C compiler identification is GNU 14.2.1
+-- The CXX compiler identification is GNU 14.2.1
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/bin/arm-none-eabi-gcc.exe
+-- Found gen_kobject_list: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/scripts/build/gen_kobject_list.py
+-- Configuring done (6.2s)
+-- Generating done (0.6s)
+-- Build files have been written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader
+-- west build: building application
+[1/189] Generating include/generated/zephyr/version.h
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr), build: v4.4.2
+[2/189] Generating misc/generated/syscalls.json, misc/generated/struct_tags.json
+[3/189] Generating include/generated/device-api-sections.ld, include/generated/device-api-sections.cmake
+[4/189] Generating include/generated/zephyr/syscall_dispatch.c, include/generated/zephyr/syscall_exports_llext.c, syscall_weakdefs_llext.c, include/generated/zephyr/syscall_list.h
+[5/189] Generating include/generated/zephyr/driver-validation.h
+[6/189] Generating include/generated/zephyr/kobj-types-enum.h, include/generated/zephyr/otype-to-str.h, include/generated/zephyr/otype-to-size.h
+[7/189] Building C object zephyr/lib/heap/CMakeFiles/heap_constants.dir/heap_constants.c.obj
+[8/189] Generating ../../include/generated/zephyr/heap_constants.h
+[9/189] Building C object zephyr/CMakeFiles/offsets.dir/arch/arm/core/offsets/offsets.c.obj
+[10/189] Generating include/generated/zephyr/offsets.h
+[11/189] Building C object zephyr/arch/common/CMakeFiles/isr_tables.dir/isr_tables.c.obj
+[12/189] Generating ../../../include/generated/libc/minimal/strerror_table.h
+[13/189] Building C object CMakeFiles/app.dir/src/main.c.obj
+[14/189] Building C object CMakeFiles/app.dir/src/flash_update.c.obj
+[15/189] Building C object CMakeFiles/app.dir/common/f103_bootloader_api.c.obj
+[16/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/libc/validate_libc.c.obj
+[17/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/heap/heap.c.obj
+[18/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_packaged.c.obj
+[19/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/clock.c.obj
+[20/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/printk.c.obj
+[21/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/sem.c.obj
+[22/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/thread_entry.c.obj
+[23/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_complete.c.obj
+[24/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf.c.obj
+[25/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/reboot.c.obj
+[26/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/dec.c.obj
+[27/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/hex.c.obj
+[28/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/rb.c.obj
+[29/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/set.c.obj
+[30/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/timeutil.c.obj
+[31/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitarray.c.obj
+[32/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitmask.c.obj
+[33/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt.c.obj
+[34/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt_common.c.obj
+[35/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/ring_buffer.c.obj
+[36/189] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/last_section_id.c.obj
+[37/189] Building C object zephyr/CMakeFiles/zephyr.dir/misc/generated/configs.c.obj
+[38/189] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32cube_hal.c.obj
+[39/189] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/soc_config.c.obj
+[40/189] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/gpioport_mgr.c.obj
+[41/189] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32_backup_domain.c.obj
+[42/189] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/stm32f1x/soc.c.obj
+[43/189] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/tracing/tracing_none.c.obj
+[44/189] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_device.c.obj
+[45/189] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_descriptor.c.obj
+[46/189] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_transfer.c.obj
+[47/189] Building C object zephyr/CMakeFiles/zephyr.dir/drivers/flash/flash_util.c.obj
+[48/189] Generating linker_zephyr_pre0.cmd
+[49/189] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/sw_isr_common.c.obj
+[50/189] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/init.c.obj
+[51/189] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/xip.c.obj
+[52/189] Linking C static library zephyr\arch\common\libisr_tables.a
+[53/189] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/fatal.c.obj
+[54/189] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi.c.obj
+[55/189] Building ASM object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi_on_reset.S.obj
+[56/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault.c.obj
+[57/189] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault_s.S.obj
+[58/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fpu.c.obj
+[59/189] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/reset.S.obj
+[60/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/scb.c.obj
+[61/189] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/vector_table.S.obj
+[62/189] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/svc.S.obj
+[63/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_manage.c.obj
+[64/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/prep_c.c.obj
+[65/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread.c.obj
+[66/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/cpu_idle.c.obj
+[67/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/exc_exit.c.obj
+[68/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread_abort.c.obj
+[69/189] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/swap_helper.S.obj
+[70/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_init.c.obj
+[71/189] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/isr_wrapper.c.obj
+[72/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/atoi.c.obj
+[73/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtol.c.obj
+[74/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoul.c.obj
+[75/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoll.c.obj
+[76/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoull.c.obj
+[77/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/bsearch.c.obj
+[78/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/exit.c.obj
+[79/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/qsort.c.obj
+[80/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strerror.c.obj
+[81/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strncasecmp.c.obj
+[82/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strstr.c.obj
+[83/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/string.c.obj
+[84/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strspn.c.obj
+[85/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/stdout_console.c.obj
+[86/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/sprintf.c.obj
+[87/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/fprintf.c.obj
+[88/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrtf.c.obj
+[89/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrt.c.obj
+[90/189] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/time/gmtime.c.obj
+[91/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/abort.c.obj
+[92/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/asctime.c.obj
+[93/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/gmtime_r.c.obj
+[94/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/localtime_r_utc.c.obj
+[95/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/ctime.c.obj
+[96/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/time.c.obj
+[97/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/malloc.c.obj
+[98/189] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/string/strnlen.c.obj
+[99/189] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/fnmatch.c.obj
+[100/189] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getentropy.c.obj
+[101/189] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getopt_shim.c.obj
+[102/189] Building C object zephyr/subsys/usb/device/class/hid/CMakeFiles/subsys__usb__device__class__hid.dir/core.c.obj
+[103/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc4_sw.c.obj
+[104/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc8_sw.c.obj
+[105/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc16_sw.c.obj
+[106/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc7_sw.c.obj
+[107/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc24_sw.c.obj
+[108/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc32c_sw.c.obj
+[109/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc32_sw.c.obj
+[110/189] Building C object zephyr/subsys/crc/CMakeFiles/subsys__crc.dir/crc32k_4_2_sw.c.obj
+[111/189] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_exti_stm32.c.obj
+[112/189] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_gpio_stm32.c.obj
+[113/189] Building C object zephyr/drivers/usb/device/CMakeFiles/drivers__usb__device.dir/usb_dc_stm32.c.obj
+[114/189] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32_ll_common.c.obj
+[115/189] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32f1.c.obj
+[116/189] Building C object zephyr/drivers/flash/CMakeFiles/drivers__flash.dir/flash_page_layout.c.obj
+[117/189] Building C object zephyr/drivers/flash/CMakeFiles/drivers__flash.dir/flash_stm32.c.obj
+[118/189] Building C object zephyr/drivers/flash/CMakeFiles/drivers__flash.dir/flash_stm32f1x.c.obj
+[119/189] Building C object zephyr/drivers/gpio/CMakeFiles/drivers__gpio.dir/gpio_stm32.c.obj
+[120/189] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_weak_impl.c.obj
+[121/189] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_stm32.c.obj
+[122/189] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/common.c.obj
+[123/189] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/pinctrl_stm32.c.obj
+[124/189] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/sys_clock_init.c.obj
+[125/189] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/cortex_m_systick.c.obj
+[126/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/soc/system_stm32f1xx.c.obj
+[127/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal.c.obj
+[128/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c.obj
+[129/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc_ex.c.obj
+[130/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd.c.obj
+[131/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd_ex.c.obj
+[132/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_usb.c.obj
+[133/189] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_utils.c.obj
+[134/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/main_weak.c.obj
+[135/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/banner.c.obj
+[136/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/busy_wait.c.obj
+[137/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/device.c.obj
+[138/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/errno.c.obj
+[139/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/fatal.c.obj
+[140/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/init.c.obj
+[141/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/kheap.c.obj
+[142/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mem_slab.c.obj
+[143/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/float.c.obj
+[144/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/version.c.obj
+[145/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/idle.c.obj
+[146/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mailbox.c.obj
+[147/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/msg_q.c.obj
+[148/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mutex.c.obj
+[149/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/queue.c.obj
+[150/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sem.c.obj
+[151/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/stack.c.obj
+[152/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/system_work_q.c.obj
+[153/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/work.c.obj
+[154/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/condvar.c.obj
+[155/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/thread.c.obj
+[156/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sched.c.obj
+[157/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/pipe.c.obj
+[158/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeslicing.c.obj
+[159/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeout.c.obj
+[160/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timer.c.obj
+[161/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mempool.c.obj
+[162/189] Building C object zephyr/kernel/CMakeFiles/kernel.dir/dynamic_disabled.c.obj
+[163/189] Linking C static library app\libapp.a
+[164/189] Linking C static library zephyr\libzephyr.a
+[165/189] Building C object zephyr/CMakeFiles/zephyr_pre0.dir/misc/empty_file.c.obj
+[166/189] Linking C static library zephyr\arch\common\libarch__common.a
+[167/189] Linking C static library zephyr\arch\arch\arm\core\libarch__arm__core.a
+[168/189] Linking C static library zephyr\arch\arch\arm\core\cortex_m\libarch__arm__core__cortex_m.a
+[169/189] Linking C static library zephyr\lib\libc\minimal\liblib__libc__minimal.a
+[170/189] Linking C static library zephyr\lib\libc\common\liblib__libc__common.a
+[171/189] Linking C static library zephyr\lib\posix\c_lib_ext\liblib__posix__c_lib_ext.a
+[172/189] Linking C static library zephyr\subsys\usb\device\class\hid\libsubsys__usb__device__class__hid.a
+[173/189] Linking C static library zephyr\subsys\crc\libsubsys__crc.a
+[174/189] Linking C static library zephyr\drivers\interrupt_controller\libdrivers__interrupt_controller.a
+[175/189] Linking C static library zephyr\drivers\usb\device\libdrivers__usb__device.a
+[176/189] Linking C static library zephyr\drivers\clock_control\libdrivers__clock_control.a
+[177/189] Linking C static library zephyr\drivers\flash\libdrivers__flash.a
+[178/189] Linking C static library zephyr\drivers\gpio\libdrivers__gpio.a
+[179/189] Linking C static library zephyr\drivers\hwinfo\libdrivers__hwinfo.a
+[180/189] Linking C static library zephyr\drivers\pinctrl\libdrivers__pinctrl.a
+[181/189] Linking C static library zephyr\drivers\timer\libdrivers__timer.a
+[182/189] Linking C static library modules\hal_stm32\stm32cube\lib..__modules__hal__stm32__stm32cube.a
+[183/189] Linking C static library zephyr\kernel\libkernel.a
+[184/189] Linking C executable zephyr\zephyr_pre0.elf; Logical command for additional byproducts on target: zephyr_pre0
+[185/189] Generating linker.cmd
+[186/189] Generating isr_tables.c, isr_tables_vt.ld, isr_tables_swi.ld
+[187/189] Building C object zephyr/CMakeFiles/zephyr_final.dir/misc/empty_file.c.obj
+[188/189] Building C object zephyr/CMakeFiles/zephyr_final.dir/isr_tables.c.obj
+[189/189] Linking C executable zephyr\zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       30036 B        32 KB     91.66%
+             RAM:       14504 B        20 KB     70.82%
+           SRAM0:           0 B        20 KB      0.00%
+        IDT_LIST:           0 B        32 KB      0.00%
+Generating files from C:/Users/Administrator/Desktop/f103_usb_bootloader/build/bootloader/zephyr/zephyr.elf for board: stm32_min_dev/stm32f103xb
+-- west build: making build dir C:\Users\Administrator\Desktop\f103_usb_bootloader\build\app_slot_a pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template
+-- CMake version: 4.4.4
+-- Found Python3: C:/Users/Administrator/Desktop/f103_usb_bootloader/.venv/Scripts/python.exe (found suitable version "3.12.14", minimum required is "3.12") found components: Interpreter
+-- Cache files will be written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/.cache
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr)
+-- Found west (found suitable version "1.5.0", minimum required is "0.14.0")
+-- Board: stm32_min_dev, Revision: blue, qualifiers: stm32f103xb
+-- Found toolchain: gnuarmemb (C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.2 rel1)
+-- Could NOT find Dtc (missing: DTC) (Required is at least version "1.4.6")
+Hint: The project() command has not yet been called.  It sets up system-specific search paths.
+-- Found BOARD.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev.dts
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_stm32f103xb_blue.overlay
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template/app.overlay
+-- Generated zephyr.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/zephyr.dts
+-- Generated pickled edt: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/edt.pickle
+-- Generated devicetree_generated.h: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/include/generated/zephyr/devicetree_generated.h
+Parsing C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/Kconfig
+Loaded configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_defconfig'
+Merged configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template/prj.conf'
+Configuration saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/.config'
+Kconfig header saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/include/generated/zephyr/autoconf.h'
+-- Found GnuLd: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/bin/ld.bfd.exe (found version "2.43.1")
+-- The C compiler identification is GNU 14.2.1
+-- The CXX compiler identification is GNU 14.2.1
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/bin/arm-none-eabi-gcc.exe
+-- Found gen_kobject_list: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/scripts/build/gen_kobject_list.py
+-- Configuring done (6.1s)
+-- Generating done (0.6s)
+-- Build files have been written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a
+-- west build: building application
+[1/187] Generating include/generated/zephyr/version.h
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr), build: v4.4.2
+[2/187] Generating misc/generated/syscalls.json, misc/generated/struct_tags.json
+[3/187] Generating include/generated/device-api-sections.ld, include/generated/device-api-sections.cmake
+[4/187] Generating include/generated/zephyr/syscall_dispatch.c, include/generated/zephyr/syscall_exports_llext.c, syscall_weakdefs_llext.c, include/generated/zephyr/syscall_list.h
+[5/187] Generating include/generated/zephyr/driver-validation.h
+[6/187] Generating include/generated/zephyr/kobj-types-enum.h, include/generated/zephyr/otype-to-str.h, include/generated/zephyr/otype-to-size.h
+[7/187] Building C object zephyr/lib/heap/CMakeFiles/heap_constants.dir/heap_constants.c.obj
+[8/187] Generating ../../include/generated/zephyr/heap_constants.h
+[9/187] Building C object zephyr/CMakeFiles/offsets.dir/arch/arm/core/offsets/offsets.c.obj
+[10/187] Generating include/generated/zephyr/offsets.h
+[11/187] Building C object zephyr/arch/common/CMakeFiles/isr_tables.dir/isr_tables.c.obj
+[12/187] Generating ../../../include/generated/libc/minimal/strerror_table.h
+[13/187] Building C object CMakeFiles/app.dir/src/main.c.obj
+[14/187] Building C object CMakeFiles/app.dir/src/runtime_usb.c.obj
+[15/187] Building C object CMakeFiles/app.dir/C_/Users/Administrator/Desktop/f103_usb_bootloader/common/f103_bootloader_api.c.obj
+[16/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/libc/validate_libc.c.obj
+[17/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/heap/heap.c.obj
+[18/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_packaged.c.obj
+[19/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/clock.c.obj
+[20/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/printk.c.obj
+[21/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/sem.c.obj
+[22/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/thread_entry.c.obj
+[23/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_complete.c.obj
+[24/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf.c.obj
+[25/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/assert.c.obj
+[26/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/dec.c.obj
+[27/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/hex.c.obj
+[28/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/rb.c.obj
+[29/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/set.c.obj
+[30/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/timeutil.c.obj
+[31/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitarray.c.obj
+[32/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitmask.c.obj
+[33/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt.c.obj
+[34/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt_common.c.obj
+[35/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/ring_buffer.c.obj
+[36/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/last_section_id.c.obj
+[37/187] Building C object zephyr/CMakeFiles/zephyr.dir/misc/generated/configs.c.obj
+[38/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32cube_hal.c.obj
+[39/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/soc_config.c.obj
+[40/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/gpioport_mgr.c.obj
+[41/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32_backup_domain.c.obj
+[42/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/stm32f1x/soc.c.obj
+[43/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_core.c.obj
+[44/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_mgmt.c.obj
+[45/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_cache.c.obj
+[46/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_msg.c.obj
+[47/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_output.c.obj
+[48/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/backends/log_backend_uart.c.obj
+[49/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/tracing/tracing_none.c.obj
+[50/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_device.c.obj
+[51/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_descriptor.c.obj
+[52/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_transfer.c.obj
+[53/187] Generating linker_zephyr_pre0.cmd
+[54/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/sw_isr_common.c.obj
+[55/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/init.c.obj
+[56/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/xip.c.obj
+[57/187] Linking C static library zephyr\arch\common\libisr_tables.a
+[58/187] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/fatal.c.obj
+[59/187] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi.c.obj
+[60/187] Building ASM object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi_on_reset.S.obj
+[61/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault.c.obj
+[62/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault_s.S.obj
+[63/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fpu.c.obj
+[64/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/reset.S.obj
+[65/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/scb.c.obj
+[66/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/vector_table.S.obj
+[67/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/svc.S.obj
+[68/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_manage.c.obj
+[69/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/prep_c.c.obj
+[70/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread.c.obj
+[71/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/cpu_idle.c.obj
+[72/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/exc_exit.c.obj
+[73/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread_abort.c.obj
+[74/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/swap_helper.S.obj
+[75/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_init.c.obj
+[76/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/isr_wrapper.c.obj
+[77/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/atoi.c.obj
+[78/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtol.c.obj
+[79/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoul.c.obj
+[80/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoll.c.obj
+[81/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoull.c.obj
+[82/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/bsearch.c.obj
+[83/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/exit.c.obj
+[84/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/qsort.c.obj
+[85/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strerror.c.obj
+[86/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strncasecmp.c.obj
+[87/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strstr.c.obj
+[88/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/string.c.obj
+[89/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strspn.c.obj
+[90/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/stdout_console.c.obj
+[91/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/sprintf.c.obj
+[92/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/fprintf.c.obj
+[93/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrtf.c.obj
+[94/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrt.c.obj
+[95/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/time/gmtime.c.obj
+[96/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/abort.c.obj
+[97/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/asctime.c.obj
+[98/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/gmtime_r.c.obj
+[99/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/localtime_r_utc.c.obj
+[100/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/ctime.c.obj
+[101/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/time.c.obj
+[102/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/malloc.c.obj
+[103/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/string/strnlen.c.obj
+[104/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/fnmatch.c.obj
+[105/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getentropy.c.obj
+[106/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getopt_shim.c.obj
+[107/187] Building C object zephyr/subsys/usb/device/class/hid/CMakeFiles/subsys__usb__device__class__hid.dir/core.c.obj
+[108/187] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_exti_stm32.c.obj
+[109/187] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_gpio_stm32.c.obj
+[110/187] Building C object zephyr/drivers/usb/device/CMakeFiles/drivers__usb__device.dir/usb_dc_stm32.c.obj
+[111/187] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32_ll_common.c.obj
+[112/187] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32f1.c.obj
+[113/187] Building C object zephyr/drivers/console/CMakeFiles/drivers__console.dir/uart_console.c.obj
+[114/187] Building C object zephyr/drivers/gpio/CMakeFiles/drivers__gpio.dir/gpio_stm32.c.obj
+[115/187] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_weak_impl.c.obj
+[116/187] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_stm32.c.obj
+[117/187] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/common.c.obj
+[118/187] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/pinctrl_stm32.c.obj
+[119/187] Building C object zephyr/drivers/reset/CMakeFiles/drivers__reset.dir/reset_stm32.c.obj
+[120/187] Building C object zephyr/drivers/serial/CMakeFiles/drivers__serial.dir/uart_stm32.c.obj
+[121/187] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/sys_clock_init.c.obj
+[122/187] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/cortex_m_systick.c.obj
+[123/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/soc/system_stm32f1xx.c.obj
+[124/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal.c.obj
+[125/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c.obj
+[126/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc_ex.c.obj
+[127/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd.c.obj
+[128/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd_ex.c.obj
+[129/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_usb.c.obj
+[130/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_utils.c.obj
+[131/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/main_weak.c.obj
+[132/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/banner.c.obj
+[133/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/busy_wait.c.obj
+[134/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/device.c.obj
+[135/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/errno.c.obj
+[136/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/fatal.c.obj
+[137/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/init.c.obj
+[138/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/kheap.c.obj
+[139/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mem_slab.c.obj
+[140/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/float.c.obj
+[141/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/version.c.obj
+[142/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/idle.c.obj
+[143/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mailbox.c.obj
+[144/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/msg_q.c.obj
+[145/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mutex.c.obj
+[146/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/queue.c.obj
+[147/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sem.c.obj
+[148/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/stack.c.obj
+[149/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/system_work_q.c.obj
+[150/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/work.c.obj
+[151/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/condvar.c.obj
+[152/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/thread.c.obj
+[153/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sched.c.obj
+[154/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/pipe.c.obj
+[155/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeslicing.c.obj
+[156/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeout.c.obj
+[157/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timer.c.obj
+[158/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mempool.c.obj
+[159/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/dynamic_disabled.c.obj
+[160/187] Linking C static library app\libapp.a
+[161/187] Linking C static library zephyr\libzephyr.a
+[162/187] Building C object zephyr/CMakeFiles/zephyr_pre0.dir/misc/empty_file.c.obj
+[163/187] Linking C static library zephyr\arch\common\libarch__common.a
+[164/187] Linking C static library zephyr\arch\arch\arm\core\libarch__arm__core.a
+[165/187] Linking C static library zephyr\arch\arch\arm\core\cortex_m\libarch__arm__core__cortex_m.a
+[166/187] Linking C static library zephyr\lib\libc\minimal\liblib__libc__minimal.a
+[167/187] Linking C static library zephyr\lib\libc\common\liblib__libc__common.a
+[168/187] Linking C static library zephyr\lib\posix\c_lib_ext\liblib__posix__c_lib_ext.a
+[169/187] Linking C static library zephyr\subsys\usb\device\class\hid\libsubsys__usb__device__class__hid.a
+[170/187] Linking C static library zephyr\drivers\interrupt_controller\libdrivers__interrupt_controller.a
+[171/187] Linking C static library zephyr\drivers\usb\device\libdrivers__usb__device.a
+[172/187] Linking C static library zephyr\drivers\clock_control\libdrivers__clock_control.a
+[173/187] Linking C static library zephyr\drivers\console\libdrivers__console.a
+[174/187] Linking C static library zephyr\drivers\gpio\libdrivers__gpio.a
+[175/187] Linking C static library zephyr\drivers\hwinfo\libdrivers__hwinfo.a
+[176/187] Linking C static library zephyr\drivers\pinctrl\libdrivers__pinctrl.a
+[177/187] Linking C static library zephyr\drivers\reset\libdrivers__reset.a
+[178/187] Linking C static library zephyr\drivers\serial\libdrivers__serial.a
+[179/187] Linking C static library zephyr\drivers\timer\libdrivers__timer.a
+[180/187] Linking C static library modules\hal_stm32\stm32cube\lib..__modules__hal__stm32__stm32cube.a
+[181/187] Linking C static library zephyr\kernel\libkernel.a
+[182/187] Linking C executable zephyr\zephyr_pre0.elf; Logical command for additional byproducts on target: zephyr_pre0
+[183/187] Generating linker.cmd
+[184/187] Generating isr_tables.c, isr_tables_vt.ld, isr_tables_swi.ld
+[185/187] Building C object zephyr/CMakeFiles/zephyr_final.dir/misc/empty_file.c.obj
+[186/187] Building C object zephyr/CMakeFiles/zephyr_final.dir/isr_tables.c.obj
+[187/187] Linking C executable zephyr\zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       41688 B        47 KB     86.62%
+             RAM:       11248 B        20 KB     54.92%
+           SRAM0:           0 B        20 KB      0.00%
+        IDT_LIST:           0 B        32 KB      0.00%
+Generating files from C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_a/zephyr/zephyr.elf for board: stm32_min_dev/stm32f103xb
+-- west build: making build dir C:\Users\Administrator\Desktop\f103_usb_bootloader\build\app_slot_b pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template
+-- CMake version: 4.4.4
+-- Found Python3: C:/Users/Administrator/Desktop/f103_usb_bootloader/.venv/Scripts/python.exe (found suitable version "3.12.14", minimum required is "3.12") found components: Interpreter
+-- Cache files will be written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/.cache
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr)
+-- Found west (found suitable version "1.5.0", minimum required is "0.14.0")
+-- Board: stm32_min_dev, Revision: blue, qualifiers: stm32f103xb
+-- Found toolchain: gnuarmemb (C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\14.2 rel1)
+-- Could NOT find Dtc (missing: DTC) (Required is at least version "1.4.6")
+Hint: The project() command has not yet been called.  It sets up system-specific search paths.
+-- Found BOARD.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev.dts
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_stm32f103xb_blue.overlay
+-- Found devicetree overlay: C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template/slot_b.overlay
+-- Generated zephyr.dts: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/zephyr.dts
+-- Generated pickled edt: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/edt.pickle
+-- Generated devicetree_generated.h: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/include/generated/zephyr/devicetree_generated.h
+Parsing C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/Kconfig
+Loaded configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/boards/others/stm32_min_dev/stm32_min_dev_defconfig'
+Merged configuration 'C:/Users/Administrator/Desktop/f103_usb_bootloader/app_template/prj.conf'
+Configuration saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/.config'
+Kconfig header saved to 'C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/include/generated/zephyr/autoconf.h'
+-- Found GnuLd: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/arm-none-eabi/bin/ld.bfd.exe (found version "2.43.1")
+-- The C compiler identification is GNU 14.2.1
+-- The CXX compiler identification is GNU 14.2.1
+-- The ASM compiler identification is GNU
+-- Found assembler: C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2 rel1/bin/arm-none-eabi-gcc.exe
+-- Found gen_kobject_list: C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr/scripts/build/gen_kobject_list.py
+-- Configuring done (6.1s)
+-- Generating done (0.6s)
+-- Build files have been written to: C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b
+-- west build: building application
+[1/187] Generating include/generated/zephyr/version.h
+-- Zephyr version: 4.4.2 (C:/Users/Administrator/Desktop/f103_usb_bootloader/zephyrproject/zephyr), build: v4.4.2
+[2/187] Generating misc/generated/syscalls.json, misc/generated/struct_tags.json
+[3/187] Generating include/generated/device-api-sections.ld, include/generated/device-api-sections.cmake
+[4/187] Generating include/generated/zephyr/syscall_dispatch.c, include/generated/zephyr/syscall_exports_llext.c, syscall_weakdefs_llext.c, include/generated/zephyr/syscall_list.h
+[5/187] Generating include/generated/zephyr/driver-validation.h
+[6/187] Generating include/generated/zephyr/kobj-types-enum.h, include/generated/zephyr/otype-to-str.h, include/generated/zephyr/otype-to-size.h
+[7/187] Building C object zephyr/lib/heap/CMakeFiles/heap_constants.dir/heap_constants.c.obj
+[8/187] Generating ../../include/generated/zephyr/heap_constants.h
+[9/187] Building C object zephyr/CMakeFiles/offsets.dir/arch/arm/core/offsets/offsets.c.obj
+[10/187] Generating include/generated/zephyr/offsets.h
+[11/187] Building C object zephyr/arch/common/CMakeFiles/isr_tables.dir/isr_tables.c.obj
+[12/187] Generating ../../../include/generated/libc/minimal/strerror_table.h
+[13/187] Building C object CMakeFiles/app.dir/src/main.c.obj
+[14/187] Building C object CMakeFiles/app.dir/src/runtime_usb.c.obj
+[15/187] Building C object CMakeFiles/app.dir/C_/Users/Administrator/Desktop/f103_usb_bootloader/common/f103_bootloader_api.c.obj
+[16/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/libc/validate_libc.c.obj
+[17/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/heap/heap.c.obj
+[18/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_packaged.c.obj
+[19/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/clock.c.obj
+[20/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/printk.c.obj
+[21/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/sem.c.obj
+[22/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/thread_entry.c.obj
+[23/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf_complete.c.obj
+[24/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/cbprintf.c.obj
+[25/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/os/assert.c.obj
+[26/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/dec.c.obj
+[27/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/hex.c.obj
+[28/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/rb.c.obj
+[29/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/set.c.obj
+[30/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/timeutil.c.obj
+[31/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitarray.c.obj
+[32/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/bitmask.c.obj
+[33/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt.c.obj
+[34/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/getopt/getopt_common.c.obj
+[35/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/ring_buffer.c.obj
+[36/187] Building C object zephyr/CMakeFiles/zephyr.dir/lib/utils/last_section_id.c.obj
+[37/187] Building C object zephyr/CMakeFiles/zephyr.dir/misc/generated/configs.c.obj
+[38/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32cube_hal.c.obj
+[39/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/soc_config.c.obj
+[40/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/gpioport_mgr.c.obj
+[41/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/common/stm32_backup_domain.c.obj
+[42/187] Building C object zephyr/CMakeFiles/zephyr.dir/soc/st/stm32/stm32f1x/soc.c.obj
+[43/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_core.c.obj
+[44/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_mgmt.c.obj
+[45/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_cache.c.obj
+[46/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_msg.c.obj
+[47/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/log_output.c.obj
+[48/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/logging/backends/log_backend_uart.c.obj
+[49/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/tracing/tracing_none.c.obj
+[50/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_device.c.obj
+[51/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_descriptor.c.obj
+[52/187] Building C object zephyr/CMakeFiles/zephyr.dir/subsys/usb/device/usb_transfer.c.obj
+[53/187] Generating linker_zephyr_pre0.cmd
+[54/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/sw_isr_common.c.obj
+[55/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/init.c.obj
+[56/187] Building C object zephyr/arch/common/CMakeFiles/arch__common.dir/xip.c.obj
+[57/187] Linking C static library zephyr\arch\common\libisr_tables.a
+[58/187] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/fatal.c.obj
+[59/187] Building C object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi.c.obj
+[60/187] Building ASM object zephyr/arch/arch/arm/core/CMakeFiles/arch__arm__core.dir/nmi_on_reset.S.obj
+[61/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault.c.obj
+[62/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fault_s.S.obj
+[63/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/fpu.c.obj
+[64/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/reset.S.obj
+[65/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/scb.c.obj
+[66/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/vector_table.S.obj
+[67/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/svc.S.obj
+[68/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_manage.c.obj
+[69/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/prep_c.c.obj
+[70/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread.c.obj
+[71/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/cpu_idle.c.obj
+[72/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/exc_exit.c.obj
+[73/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/thread_abort.c.obj
+[74/187] Building ASM object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/swap_helper.S.obj
+[75/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/irq_init.c.obj
+[76/187] Building C object zephyr/arch/arch/arm/core/cortex_m/CMakeFiles/arch__arm__core__cortex_m.dir/isr_wrapper.c.obj
+[77/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/atoi.c.obj
+[78/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtol.c.obj
+[79/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoul.c.obj
+[80/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoll.c.obj
+[81/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/strtoull.c.obj
+[82/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/bsearch.c.obj
+[83/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/exit.c.obj
+[84/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdlib/qsort.c.obj
+[85/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strerror.c.obj
+[86/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strncasecmp.c.obj
+[87/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strstr.c.obj
+[88/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/string.c.obj
+[89/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/string/strspn.c.obj
+[90/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/stdout_console.c.obj
+[91/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/sprintf.c.obj
+[92/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/stdout/fprintf.c.obj
+[93/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrtf.c.obj
+[94/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/math/sqrt.c.obj
+[95/187] Building C object zephyr/lib/libc/minimal/CMakeFiles/lib__libc__minimal.dir/source/time/gmtime.c.obj
+[96/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/abort.c.obj
+[97/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/asctime.c.obj
+[98/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/gmtime_r.c.obj
+[99/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/localtime_r_utc.c.obj
+[100/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/ctime.c.obj
+[101/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/time/time.c.obj
+[102/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/stdlib/malloc.c.obj
+[103/187] Building C object zephyr/lib/libc/common/CMakeFiles/lib__libc__common.dir/source/string/strnlen.c.obj
+[104/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/fnmatch.c.obj
+[105/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getentropy.c.obj
+[106/187] Building C object zephyr/lib/posix/c_lib_ext/CMakeFiles/lib__posix__c_lib_ext.dir/getopt_shim.c.obj
+[107/187] Building C object zephyr/subsys/usb/device/class/hid/CMakeFiles/subsys__usb__device__class__hid.dir/core.c.obj
+[108/187] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_exti_stm32.c.obj
+[109/187] Building C object zephyr/drivers/interrupt_controller/CMakeFiles/drivers__interrupt_controller.dir/intc_gpio_stm32.c.obj
+[110/187] Building C object zephyr/drivers/usb/device/CMakeFiles/drivers__usb__device.dir/usb_dc_stm32.c.obj
+[111/187] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32_ll_common.c.obj
+[112/187] Building C object zephyr/drivers/clock_control/CMakeFiles/drivers__clock_control.dir/clock_stm32f1.c.obj
+[113/187] Building C object zephyr/drivers/console/CMakeFiles/drivers__console.dir/uart_console.c.obj
+[114/187] Building C object zephyr/drivers/gpio/CMakeFiles/drivers__gpio.dir/gpio_stm32.c.obj
+[115/187] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_weak_impl.c.obj
+[116/187] Building C object zephyr/drivers/hwinfo/CMakeFiles/drivers__hwinfo.dir/hwinfo_stm32.c.obj
+[117/187] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/common.c.obj
+[118/187] Building C object zephyr/drivers/pinctrl/CMakeFiles/drivers__pinctrl.dir/pinctrl_stm32.c.obj
+[119/187] Building C object zephyr/drivers/reset/CMakeFiles/drivers__reset.dir/reset_stm32.c.obj
+[120/187] Building C object zephyr/drivers/serial/CMakeFiles/drivers__serial.dir/uart_stm32.c.obj
+[121/187] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/sys_clock_init.c.obj
+[122/187] Building C object zephyr/drivers/timer/CMakeFiles/drivers__timer.dir/cortex_m_systick.c.obj
+[123/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/soc/system_stm32f1xx.c.obj
+[124/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal.c.obj
+[125/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c.obj
+[126/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_rcc_ex.c.obj
+[127/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd.c.obj
+[128/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_hal_pcd_ex.c.obj
+[129/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_usb.c.obj
+[130/187] Building C object modules/hal_stm32/stm32cube/CMakeFiles/..__modules__hal__stm32__stm32cube.dir/stm32f1xx/drivers/src/stm32f1xx_ll_utils.c.obj
+[131/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/main_weak.c.obj
+[132/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/banner.c.obj
+[133/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/busy_wait.c.obj
+[134/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/device.c.obj
+[135/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/errno.c.obj
+[136/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/fatal.c.obj
+[137/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/init.c.obj
+[138/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/kheap.c.obj
+[139/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mem_slab.c.obj
+[140/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/float.c.obj
+[141/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/version.c.obj
+[142/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/idle.c.obj
+[143/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mailbox.c.obj
+[144/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/msg_q.c.obj
+[145/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mutex.c.obj
+[146/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/queue.c.obj
+[147/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sem.c.obj
+[148/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/stack.c.obj
+[149/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/system_work_q.c.obj
+[150/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/work.c.obj
+[151/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/condvar.c.obj
+[152/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/thread.c.obj
+[153/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/sched.c.obj
+[154/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/pipe.c.obj
+[155/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeslicing.c.obj
+[156/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timeout.c.obj
+[157/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/timer.c.obj
+[158/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/mempool.c.obj
+[159/187] Building C object zephyr/kernel/CMakeFiles/kernel.dir/dynamic_disabled.c.obj
+[160/187] Linking C static library app\libapp.a
+[161/187] Linking C static library zephyr\libzephyr.a
+[162/187] Building C object zephyr/CMakeFiles/zephyr_pre0.dir/misc/empty_file.c.obj
+[163/187] Linking C static library zephyr\arch\common\libarch__common.a
+[164/187] Linking C static library zephyr\arch\arch\arm\core\libarch__arm__core.a
+[165/187] Linking C static library zephyr\arch\arch\arm\core\cortex_m\libarch__arm__core__cortex_m.a
+[166/187] Linking C static library zephyr\lib\libc\minimal\liblib__libc__minimal.a
+[167/187] Linking C static library zephyr\lib\libc\common\liblib__libc__common.a
+[168/187] Linking C static library zephyr\lib\posix\c_lib_ext\liblib__posix__c_lib_ext.a
+[169/187] Linking C static library zephyr\subsys\usb\device\class\hid\libsubsys__usb__device__class__hid.a
+[170/187] Linking C static library zephyr\drivers\interrupt_controller\libdrivers__interrupt_controller.a
+[171/187] Linking C static library zephyr\drivers\usb\device\libdrivers__usb__device.a
+[172/187] Linking C static library zephyr\drivers\clock_control\libdrivers__clock_control.a
+[173/187] Linking C static library zephyr\drivers\console\libdrivers__console.a
+[174/187] Linking C static library zephyr\drivers\gpio\libdrivers__gpio.a
+[175/187] Linking C static library zephyr\drivers\hwinfo\libdrivers__hwinfo.a
+[176/187] Linking C static library zephyr\drivers\pinctrl\libdrivers__pinctrl.a
+[177/187] Linking C static library zephyr\drivers\reset\libdrivers__reset.a
+[178/187] Linking C static library zephyr\drivers\serial\libdrivers__serial.a
+[179/187] Linking C static library zephyr\drivers\timer\libdrivers__timer.a
+[180/187] Linking C static library modules\hal_stm32\stm32cube\lib..__modules__hal__stm32__stm32cube.a
+[181/187] Linking C static library zephyr\kernel\libkernel.a
+[182/187] Linking C executable zephyr\zephyr_pre0.elf; Logical command for additional byproducts on target: zephyr_pre0
+[183/187] Generating linker.cmd
+[184/187] Generating isr_tables.c, isr_tables_vt.ld, isr_tables_swi.ld
+[185/187] Building C object zephyr/CMakeFiles/zephyr_final.dir/misc/empty_file.c.obj
+[186/187] Building C object zephyr/CMakeFiles/zephyr_final.dir/isr_tables.c.obj
+[187/187] Linking C executable zephyr\zephyr.elf
+Memory region         Used Size  Region Size  %age Used
+           FLASH:       41688 B        47 KB     86.62%
+             RAM:       11248 B        20 KB     54.92%
+           SRAM0:           0 B        20 KB      0.00%
+        IDT_LIST:           0 B        32 KB      0.00%
+Generating files from C:/Users/Administrator/Desktop/f103_usb_bootloader/build/app_slot_b/zephyr/zephyr.elf for board: stm32_min_dev/stm32f103xb
+
+Bootloader:
+  build\bootloader\zephyr\zephyr.bin
+Application slot A:
+  build\app_slot_a\zephyr\zephyr.bin
+Application slot B:
+  build\app_slot_b\zephyr\zephyr.bin

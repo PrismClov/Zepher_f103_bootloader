@@ -1,0 +1,8 @@
+connect
+r
+SetBP 0x08009958 T H
+g
+WaitHalt 6000
+regs
+ClearBP 1
+q

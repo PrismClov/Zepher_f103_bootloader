@@ -1,0 +1,7 @@
+connect
+halt
+mem 0x40010800, 16
+mem 0x40005c40, 20
+mem 0x40021000, 8
+regs
+q

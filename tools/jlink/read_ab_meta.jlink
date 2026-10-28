@@ -1,0 +1,6 @@
+connect
+halt
+savebin C:\Users\Administrator\Desktop\f103_usb_bootloader\build\meta_a.bin, 0x0801F800, 52
+savebin C:\Users\Administrator\Desktop\f103_usb_bootloader\build\meta_b.bin, 0x0801FC00, 52
+regs
+q

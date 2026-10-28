@@ -1,0 +1,52 @@
+/*
+ * STM32F103CBT6: 128 KiB flash, 20 KiB SRAM.
+ *
+ * 0x08000000 - 0x08007FFF  bootloader (32 KiB)
+ * 0x08008000 - 0x08013BFF  application slot A (47 KiB)
+ * 0x08013C00 - 0x0801F7FF  application slot B (47 KiB)
+ * 0x0801F800 - 0x0801FBFF  metadata page A (1 KiB)
+ * 0x0801FC00 - 0x0801FFFF  metadata page B (1 KiB)
+ */
+
+&flash0 {
+	reg = <0x08000000 DT_SIZE_K(128)>;
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "bootloader";
+			reg = <0x00000000 DT_SIZE_K(32)>;
+			read-only;
+		};
+
+		slot_a_partition: partition@8000 {
+			label = "slot-a";
+			reg = <0x00008000 0x0000BC00>;
+		};
+
+		slot_b_partition: partition@13C00 {
+			label = "slot-b";
+			reg = <0x00013C00 0x0000BC00>;
+		};
+
+		meta_a_partition: partition@1F800 {
+			label = "meta-a";
+			reg = <0x0001F800 DT_SIZE_K(1)>;
+		};
+
+		meta_b_partition: partition@1FC00 {
+			label = "meta-b";
+			reg = <0x0001FC00 DT_SIZE_K(1)>;
+		};
+	};
+};
+
+/ {
+	chosen {
+		zephyr,code-partition = &boot_partition;
+	};
+};
+

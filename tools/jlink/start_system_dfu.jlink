@@ -1,0 +1,6 @@
+connect
+halt
+wreg MSP, 0x200001FC
+setpc 0x1FFFF020
+g
+q

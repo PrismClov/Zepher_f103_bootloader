@@ -1,0 +1,8 @@
+connect
+r
+h
+erase
+loadfile C:\Users\Administrator\Desktop\f103_usb_bootloader\build\usb_hid_mouse_12m2\zephyr\zephyr.hex
+verifybin C:\Users\Administrator\Desktop\f103_usb_bootloader\build\usb_hid_mouse_12m2\zephyr\zephyr.bin, 0x08000000
+h
+q

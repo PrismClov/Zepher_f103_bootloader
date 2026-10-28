@@ -1,0 +1,9 @@
+connect
+r
+h
+erase
+loadfile C:\Users\Administrator\Desktop\f103_usb_bootloader\dist\f103_usb_bootloader.hex
+verifybin C:\Users\Administrator\Desktop\f103_usb_bootloader\dist\f103_usb_bootloader.bin, 0x08000000
+r
+g
+q

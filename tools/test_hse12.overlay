@@ -1,0 +1,11 @@
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(12)>;
+	status = "okay";
+};
+
+&pll {
+	mul = <6>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+

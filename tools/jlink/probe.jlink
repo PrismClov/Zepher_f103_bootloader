@@ -1,0 +1,5 @@
+connect
+halt
+regs
+mem 0x08000000, 16
+q

@@ -1,0 +1,5 @@
+connect
+halt
+mem32 0x1ffff000, 16
+regs
+q

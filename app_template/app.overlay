@@ -1,0 +1,48 @@
+/*
+ * Application side of the F103 USB bootloader layout.
+ * This image is linked for application slot A.
+ */
+
+&flash0 {
+	reg = <0x08000000 DT_SIZE_K(128)>;
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "bootloader";
+			reg = <0x00000000 DT_SIZE_K(32)>;
+			read-only;
+		};
+
+		slot_a_partition: partition@8000 {
+			label = "slot-a";
+			reg = <0x00008000 0x0000BC00>;
+		};
+
+		slot_b_partition: partition@13C00 {
+			label = "slot-b";
+			reg = <0x00013C00 0x0000BC00>;
+		};
+
+		meta_a_partition: partition@1F800 {
+			label = "meta-a";
+			reg = <0x0001F800 DT_SIZE_K(1)>;
+		};
+
+		meta_b_partition: partition@1FC00 {
+			label = "meta-b";
+			reg = <0x0001FC00 DT_SIZE_K(1)>;
+		};
+	};
+};
+
+/ {
+	chosen {
+		zephyr,code-partition = &slot_a_partition;
+	};
+};
+
+
