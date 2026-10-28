@@ -55,8 +55,8 @@ class F103UpdaterApp:
         self.root.configure(background=BACKGROUND)
 
         self.events: queue.Queue[tuple[str, object]] = queue.Queue()
-        self.firmware_paths: dict[int, Path] = {}
-        self.firmware_images: dict[int, bytes] = {}
+        self.firmware_path: Path | None = None
+        self.firmware_image: bytes | None = None
         self.busy = False
         self.closed = False
 
@@ -209,28 +209,19 @@ class F103UpdaterApp:
         ttk.Label(firmware_card, text="固件文件", style="Section.TLabel").grid(
             row=0, column=0, columnspan=2, sticky="w"
         )
-        self.file_vars = {
-            0: tk.StringVar(value="请选择 Slot A 固件"),
-            1: tk.StringVar(value="请选择 Slot B 固件"),
-        }
+        self.file_var = tk.StringVar(value="请选择固件（链接到 Slot A 的 .bin）")
         ttk.Entry(
-            firmware_card, textvariable=self.file_vars[0], state="readonly"
+            firmware_card, textvariable=self.file_var, state="readonly"
         ).grid(row=1, column=0, sticky="ew", pady=(9, 0), padx=(0, 8))
         ttk.Button(
-            firmware_card, text="选择 A", style="Secondary.TButton",
-            command=lambda: self._browse_slot(0)
+            firmware_card, text="选择固件", style="Secondary.TButton",
+            command=self._browse_firmware
         ).grid(row=1, column=1, sticky="e", pady=(9, 0))
 
-        ttk.Entry(
-            firmware_card, textvariable=self.file_vars[1], state="readonly"
-        ).grid(row=2, column=0, sticky="ew", pady=(7, 0), padx=(0, 8))
-        ttk.Button(
-            firmware_card, text="选择 B", style="Secondary.TButton",
-            command=lambda: self._browse_slot(1)
-        ).grid(row=2, column=1, sticky="e", pady=(7, 0))
-
         self.file_info = ttk.Label(
-            firmware_card, text=f"每槽最大允许 {SLOT_SIZE:,} 字节",
+            firmware_card,
+            text=f"固件最大 {SLOT_SIZE:,} 字节 · 下载固定写入 B 区，"
+                 f"复位后交换到 A 区试运行",
             style="Muted.TLabel"
         )
         self.file_info.grid(row=3, column=0, columnspan=2, sticky="w", pady=(7, 0))
@@ -312,118 +303,40 @@ class F103UpdaterApp:
 
     def _auto_select_firmware(self) -> None:
         for candidate in (
-            application_root() / "app_template_slot_a.bin",
-            application_root() / "dist" / "app_template_slot_a.bin",
+            application_root() / "app_template.bin",
+            application_root() / "dist" / "app_template.bin",
         ):
             if candidate.is_file():
-                counterpart = self._counterpart(candidate, 0)
-                if counterpart is not None and counterpart.is_file():
-                    self._set_firmware_pair(candidate, counterpart, quiet=True)
+                self._set_firmware(candidate, quiet=True)
                 return
 
-    @staticmethod
-    def _counterpart(path: Path, slot: int) -> Path | None:
-        other = 1 - slot
-        stem = path.stem
-        lower = stem.lower()
-        if "_slot_a" in lower:
-            start = lower.index("_slot_a")
-            name = stem[:start] + f"_slot_{'ab'[other]}" + stem[start + 7:]
-            return path.with_name(name + path.suffix)
-        if "_slot_b" in lower:
-            start = lower.index("_slot_b")
-            name = stem[:start] + f"_slot_{'ab'[other]}" + stem[start + 7:]
-            return path.with_name(name + path.suffix)
-        if lower.endswith("_a"):
-            return path.with_name(stem[:-2] + f"_{'ab'[other]}" + path.suffix)
-        if lower.endswith("_b"):
-            return path.with_name(stem[:-2] + f"_{'ab'[other]}" + path.suffix)
-        return path.with_name(f"{stem}_slot_{'ab'[other]}{path.suffix}")
-
-    def _browse_slot(self, slot: int) -> None:
+    def _browse_firmware(self) -> None:
         selected = filedialog.askopenfilename(
-            title=f"选择 Slot {'AB'[slot]} 固件",
+            title="选择固件",
             filetypes=[("Raw binary", "*.bin"), ("All files", "*.*")],
         )
         if selected:
-            self._set_firmware(Path(selected), slot)
+            self._set_firmware(Path(selected))
 
-    def _set_firmware(self, path: Path, requested_slot: int,
-                      quiet: bool = False) -> None:
+    def _set_firmware(self, path: Path, quiet: bool = False) -> None:
         try:
             data = path.read_bytes()
-            actual_slot = validate_image(data)
+            validate_image(data)
         except (OSError, UploadError) as exc:
             self.file_info.configure(text=f"文件错误：{exc}", foreground=ERROR)
             if not quiet:
                 messagebox.showerror("固件无效", str(exc))
             return
 
-        if actual_slot != requested_slot:
-            self.file_info.configure(
-                text=f"该文件实际链接到 Slot {'AB'[actual_slot]}",
-                foreground=ERROR,
-            )
-            if not quiet:
-                messagebox.showerror(
-                    "槽位不匹配",
-                    f"该固件链接到 Slot {'AB'[actual_slot]}，"
-                    f"但选择的是 Slot {'AB'[requested_slot]}。",
-                )
-            return
-
-        counterpart = self._counterpart(path, actual_slot)
-        if counterpart is None or not counterpart.is_file():
-            self.firmware_paths[actual_slot] = path
-            self.firmware_images[actual_slot] = data
-            self._refresh_firmware_display()
-            self.file_info.configure(
-                text=f"已选择 Slot {'AB'[actual_slot]}，"
-                     f"未找到 Slot {'AB'[1 - actual_slot]} 配套文件",
-                foreground=WARNING,
-            )
-            self._append_log(f"已选择 Slot {'AB'[actual_slot]}：{path.name}")
-            return
-
-        self._set_firmware_pair(
-            path if actual_slot == 0 else counterpart,
-            path if actual_slot == 1 else counterpart,
-            quiet=quiet,
+        self.firmware_path = path
+        self.firmware_image = data
+        self.file_var.set(str(path))
+        crc = binascii.crc32(data) & 0xFFFFFFFF
+        self.file_info.configure(
+            text=f"{len(data):,} B · CRC32 0x{crc:08X} · 下载固定写入 B 区",
+            foreground=MUTED,
         )
-
-    def _set_firmware_pair(self, path_a: Path, path_b: Path,
-                           quiet: bool = False) -> None:
-        try:
-            data_a = path_a.read_bytes()
-            data_b = path_b.read_bytes()
-            validate_image(data_a, 0)
-            validate_image(data_b, 1)
-        except (OSError, UploadError) as exc:
-            self.file_info.configure(text=f"固件对错误：{exc}", foreground=ERROR)
-            if not quiet:
-                messagebox.showerror("A/B 固件无效", str(exc))
-            return
-
-        self.firmware_paths = {0: path_a, 1: path_b}
-        self.firmware_images = {0: data_a, 1: data_b}
-        self._refresh_firmware_display()
-        self._append_log(f"已选择 A/B 固件对：{path_a.name} + {path_b.name}")
-
-    def _refresh_firmware_display(self) -> None:
-        details = []
-        for slot in (0, 1):
-            path = self.firmware_paths.get(slot)
-            data = self.firmware_images.get(slot)
-            self.file_vars[slot].set(str(path) if path else f"请选择 Slot {'AB'[slot]} 固件")
-            if data is not None:
-                crc = binascii.crc32(data) & 0xFFFFFFFF
-                details.append(
-                    f"{'AB'[slot]}: {len(data):,} B / CRC 0x{crc:08X}"
-                )
-        if len(details) == 2:
-            self.file_info.configure(
-                text="  ·  ".join(details), foreground=MUTED
-            )
+        self._append_log(f"已选择固件：{path.name}")
 
     def _poll_device(self) -> None:
         if self.closed:
@@ -466,13 +379,9 @@ class F103UpdaterApp:
     def _start_update(self) -> None:
         if self.busy:
             return
-        for slot in (0, 1):
-            if slot not in self.firmware_images:
-                self._browse_slot(slot)
-                if slot not in self.firmware_images:
-                    return
-        if len(self.firmware_images) != 2:
-            if not self.firmware_images:
+        if self.firmware_image is None:
+            self._browse_firmware()
+            if self.firmware_image is None:
                 return
 
         self.busy = True
@@ -483,7 +392,7 @@ class F103UpdaterApp:
         self._append_log("")
         self._append_log("开始升级")
 
-        data = dict(self.firmware_images)
+        data = self.firmware_image
         thread = threading.Thread(
             target=self._update_worker, args=(data,), daemon=True
         )

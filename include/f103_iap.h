@@ -1,6 +1,11 @@
 /*
  * Shared layout and USB HID IAP protocol for the F103 bootloader.
  *
+ * MCUboot-style layout: firmware is always downloaded into slot B and
+ * swapped sector-by-sector into slot A (the boot slot) before the test
+ * boot. A scratch sector and a persistent swap log make the exchange
+ * power-loss safe.
+ *
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,31 +18,34 @@
 #define F103_BOOT_SIZE          (32U * 1024U)
 #define F103_SLOT_A_BASE        0x08008000U
 #define F103_SLOT_B_BASE        0x08013C00U
-#define F103_SLOT_SIZE          (47U * 1024U)
+#define F103_SLOT_SIZE          (46U * 1024U)
 #define F103_FLASH_END          0x08020000U
 #define F103_FLASH_PAGE_SIZE    1024U
 
 #define F103_BOOT_OFFSET        0x00000000U
 #define F103_SLOT_A_OFFSET      0x00008000U
+#define F103_SCRATCH_OFFSET     0x00013800U
 #define F103_SLOT_B_OFFSET      0x00013C00U
+#define F103_SWAP_LOG_OFFSET    0x0001F400U
 #define F103_META_A_OFFSET      0x0001F800U
 #define F103_META_B_OFFSET      0x0001FC00U
 #define F103_META_PAGE_SIZE     (1U * 1024U)
 
 /*
- * v2 metadata ("2BMT"): adds a pending TEST state with a persistent boot
- * attempt counter and a known-good slot for automatic revert. Records in
- * the v1 format ("ABMT") are treated as invalid.
+ * v3 metadata ("3BMT"): MCUboot-style flow. Images are single-linked for
+ * slot A; slot B is only a download slot. flags carry the pending TEST
+ * state and the sector-swap request. v1/v2 records are invalid.
  */
-#define F103_META_MAGIC         0x544D4232U /* "2BMT" */
+#define F103_META_MAGIC         0x544D4233U /* "3BMT" */
 #define F103_SLOT_VALID         0x56414C44U /* "DALV" */
 #define F103_BOOT_REQUEST_MAGIC 0xB007F103U
-#define F103_IAP_VERSION        0x00020000U
+#define F103_IAP_VERSION        0x00030000U
 
-/* Metadata flags: the active slot is a test image awaiting image_ok. */
-#define F103_META_FLAG_PENDING  0x00000001U
+/* Metadata flags. */
+#define F103_META_FLAG_PENDING  0x00000001U /* tested image awaits image_ok */
+#define F103_META_FLAG_SWAP     0x00000002U /* A/B sector exchange requested */
 
-/* Test boots allowed before the bootloader reverts to the known-good slot. */
+/* Test boots allowed before the bootloader swaps back to the known-good. */
 #define F103_TEST_BOOT_MAX_ATTEMPTS 3U
 
 #define F103_HID_REPORT_ID_IN   0x01U

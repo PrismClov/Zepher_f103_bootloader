@@ -38,8 +38,7 @@ ROLE_APPLICATION = 2
 
 SLOT_A_BASE = 0x08008000
 SLOT_B_BASE = 0x08013C00
-SLOT_BASES = (SLOT_A_BASE, SLOT_B_BASE)
-SLOT_SIZE = 47 * 1024
+SLOT_SIZE = 46 * 1024
 
 STATUS_TEXT = {
     0: "OK",
@@ -197,7 +196,12 @@ def request_bootloader(dev: hid.device, info: dict, wait: float,
     raise UploadError("application reset, but the bootloader was not found")
 
 
-def validate_image(data: bytes, expected_slot: int | None = None) -> int:
+def validate_image(data: bytes) -> None:
+    """Validate a firmware image single-linked for slot A (the boot slot).
+
+    The bootloader always downloads into slot B and swaps the image into
+    slot A before the test boot, so the reset vector must target slot A.
+    """
     if not data:
         raise UploadError("firmware file is empty")
     if len(data) > SLOT_SIZE:
@@ -214,25 +218,14 @@ def validate_image(data: bytes, expected_slot: int | None = None) -> int:
         raise UploadError("reset vector is not a Thumb address")
 
     reset_address = reset_handler & ~1
-    matches = [
-        slot for slot, base in enumerate(SLOT_BASES)
-        if base <= reset_address < base + len(data)
-    ]
-    if not matches:
+    if not SLOT_A_BASE <= reset_address < SLOT_A_BASE + len(data):
         raise UploadError(
-            f"reset vector 0x{reset_handler:08X} is not linked for slot A or B"
+            f"reset vector 0x{reset_handler:08X} is not linked for slot A "
+            f"(0x{SLOT_A_BASE:08X}); the bootloader swaps images into slot A"
         )
-    if expected_slot is not None:
-        if expected_slot not in matches:
-            raise UploadError(
-                f"firmware is linked for slot {'AB'[matches[0]]}, "
-                f"but slot {'AB'[expected_slot]} is required"
-            )
-        return expected_slot
-    return matches[0]
 
 
-def upload(dev: hid.device, firmware: bytes | dict[int, bytes], run: bool,
+def upload(dev: hid.device, firmware: bytes, run: bool,
            log_cb: Callable[[str], None] | None = None,
            progress_cb: Callable[[int], None] | None = None) -> None:
     sequence = 0
@@ -252,62 +245,47 @@ def upload(dev: hid.device, firmware: bytes | dict[int, bytes], run: bool,
 
     active_base, target_base, device_size = struct.unpack_from("<III", info, 0)
     role = device_role(info)
-    active_slot = info[13]
     target_slot = info[14]
-    metadata_valid = info[15]
 
-    if len(info) >= 20 and info[16]:
-        attempts = info[17]
-        max_attempts = info[18]
-        fallback = "AB"[info[19]] if info[19] in (0, 1) else "?"
-        emit(
-            f"设备存在待确认测试镜像：已试启动 {attempts}/{max_attempts}，"
-            f"回滚槽 {fallback}",
-            log_cb,
-        )
-
-    if role != ROLE_BOOTLOADER or target_slot not in (0, 1):
+    if role != ROLE_BOOTLOADER or target_slot != 1:
         raise UploadError("device is not an A/B-capable bootloader")
     if device_size != SLOT_SIZE:
         raise UploadError(
             f"slot size mismatch: device {device_size}, host {SLOT_SIZE}"
         )
-    if target_base != SLOT_BASES[target_slot]:
+    if target_base != SLOT_B_BASE:
         raise UploadError(
             f"target slot base mismatch: 0x{target_base:08X}, "
-            f"expected 0x{SLOT_BASES[target_slot]:08X}"
+            f"expected 0x{SLOT_B_BASE:08X}"
         )
 
-    if isinstance(firmware, dict):
-        if target_slot not in firmware:
-            raise UploadError(
-                f"active slot is {'AB'[active_slot] if metadata_valid else 'none'}, "
-                f"next update requires slot {'AB'[target_slot]} firmware"
-            )
-        selected_firmware = firmware[target_slot]
-    else:
-        selected_firmware = firmware
-    validate_image(selected_firmware, target_slot)
+    if len(info) >= 20 and info[16]:
+        emit(
+            f"设备存在待确认测试镜像：已试启动 {info[17]}/{info[18]}，"
+            f"本次升级将覆盖下载槽 B",
+            log_cb,
+        )
 
-    crc = binascii.crc32(selected_firmware) & 0xFFFFFFFF
+    validate_image(firmware)
+    crc = binascii.crc32(firmware) & 0xFFFFFFFF
     emit(
         f"Bootloader {version >> 16}.{version & 0xFFFF} | "
-        f"slot {'AB'[target_slot]} @ 0x{target_base:08X} | "
-        f"镜像 {len(selected_firmware)} B | CRC32 0x{crc:08X}",
+        f"下载槽 B @ 0x{target_base:08X}（运行槽 A 保持可启动） | "
+        f"镜像 {len(firmware)} B | CRC32 0x{crc:08X}",
         log_cb,
     )
 
-    command(CMD_BEGIN, len(selected_firmware))
+    command(CMD_BEGIN, len(firmware))
 
     sent = 0
     started = time.monotonic()
     last_percent = -1
-    while sent < len(selected_firmware):
-        chunk = selected_firmware[sent:sent + DATA_MAX]
+    while sent < len(firmware):
+        chunk = firmware[sent:sent + DATA_MAX]
         command(CMD_DATA, sent, chunk)
         sent += len(chunk)
 
-        percent = sent * 100 // len(selected_firmware)
+        percent = sent * 100 // len(firmware)
         if percent != last_percent:
             if progress_cb is not None:
                 progress_cb(percent)
@@ -327,15 +305,16 @@ def upload(dev: hid.device, firmware: bytes | dict[int, bytes], run: bool,
 
     elapsed = max(time.monotonic() - started, 0.001)
     emit(f"Flash 校验通过，耗时 {elapsed:.2f}s", log_cb)
-    emit("新镜像已提交为 pending，复位后以 TEST 模式试运行", log_cb)
-    emit("应用自检通过并确认后生效；连续 3 次启动未确认将自动回滚", log_cb)
+    emit("新镜像已写入 B 区并提交 pending（含 A/B 扇区交换请求）", log_cb)
+    emit("复位后 Bootloader 校验候选镜像，按扇区交换到 A 区并以 TEST 模式启动", log_cb)
+    emit("应用自检通过并确认后生效；连续 3 次启动未确认将交换回滚", log_cb)
 
     if run:
         command(CMD_RUN)
-        emit("应用启动命令已发送", log_cb)
+        emit("应用启动命令已发送（扇区交换约需数秒，请稍候）", log_cb)
 
 
-def perform_update(firmware: bytes | dict[int, bytes], wait: float = 20.0,
+def perform_update(firmware: bytes, wait: float = 20.0,
                    run: bool = True,
                    log_cb: Callable[[str], None] | None = None,
                    progress_cb: Callable[[int], None] | None = None) -> None:
@@ -362,15 +341,12 @@ def perform_update(firmware: bytes | dict[int, bytes], wait: float = 20.0,
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Upload slot-linked A/B images to the F103 USB HID bootloader"
+        description="Upload a firmware image to the F103 USB HID bootloader"
     )
     parser.add_argument(
         "firmware", type=Path,
-        help="firmware linked for slot A or slot B (.bin)"
-    )
-    parser.add_argument(
-        "--slot-b", type=Path,
-        help="Slot B image; provide the pair for automatic A/B switching",
+        help="firmware single-linked for slot A (.bin); the bootloader "
+             "downloads it into slot B and swaps it into slot A"
     )
     parser.add_argument(
         "--wait",
@@ -386,15 +362,8 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        firmware_a = args.firmware.read_bytes()
-        slot = validate_image(firmware_a)
-        firmware = {slot: firmware_a}
-        if args.slot_b is not None:
-            firmware_b = args.slot_b.read_bytes()
-            slot_b = validate_image(firmware_b)
-            if slot_b in firmware:
-                raise UploadError("both firmware files are linked for the same slot")
-            firmware[slot_b] = firmware_b
+        firmware = args.firmware.read_bytes()
+        validate_image(firmware)
     except (OSError, UploadError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

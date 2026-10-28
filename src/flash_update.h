@@ -22,13 +22,14 @@ int flash_update_target_slot(void);
 uint32_t flash_update_slot_base(int slot);
 uint32_t flash_update_slot_size(void);
 
-/* Pending TEST state of the latest metadata record. */
+/* Pending TEST / swap state of the latest metadata record. */
 bool flash_update_test_state(uint8_t *pending, uint8_t *attempts,
-                             uint8_t *known_good_slot);
+                             uint8_t *known_good_slot, uint8_t *swap_busy,
+                             uint8_t *swap_done, uint8_t *swap_total);
 
 /*
  * Called by the running application after its self-test passed: clears the
- * pending flag (writes image_ok) and makes the test image permanent.
+ * pending flag (writes image_ok) and makes the tested image permanent.
  */
 int flash_update_confirm_image(void);
 

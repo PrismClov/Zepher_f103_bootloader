@@ -1,6 +1,7 @@
 /*
  * Application side of the F103 USB bootloader layout.
- * This image is linked for application slot A.
+ * Single image, linked for slot A (the boot slot). The bootloader
+ * downloads into slot B and swaps it into slot A sector by sector.
  */
 
 &flash0 {
@@ -19,12 +20,22 @@
 
 		slot_a_partition: partition@8000 {
 			label = "slot-a";
-			reg = <0x00008000 0x0000BC00>;
+			reg = <0x00008000 0x0000B800>;
+		};
+
+		scratch_partition: partition@13800 {
+			label = "swap-scratch";
+			reg = <0x00013800 DT_SIZE_K(1)>;
 		};
 
 		slot_b_partition: partition@13C00 {
 			label = "slot-b";
-			reg = <0x00013C00 0x0000BC00>;
+			reg = <0x00013C00 0x0000B800>;
+		};
+
+		swap_log_partition: partition@1F400 {
+			label = "swap-log";
+			reg = <0x0001F400 DT_SIZE_K(1)>;
 		};
 
 		meta_a_partition: partition@1F800 {
@@ -44,5 +55,3 @@
 		zephyr,code-partition = &slot_a_partition;
 	};
 };
-
-

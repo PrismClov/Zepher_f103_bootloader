@@ -139,7 +139,7 @@ static void process_request(const uint8_t *request, size_t length)
 	const uint8_t *data;
 	uint8_t status = F103_IAP_OK;
 	uint32_t value = 0U;
-	uint8_t extra[20] = {0U};
+	uint8_t extra[24] = {0U};
 	bool run_after_response = false;
 	int err = 0;
 
@@ -187,13 +187,20 @@ static void process_request(const uint8_t *request, size_t length)
 				uint8_t pending = 0U;
 				uint8_t attempts = 0U;
 				uint8_t known_good = 0U;
+				uint8_t swap_busy = 0U;
+				uint8_t swap_done = 0U;
+				uint8_t swap_total = 0U;
 
 				(void)flash_update_test_state(&pending, &attempts,
-							      &known_good);
+							      &known_good, &swap_busy,
+							      &swap_done, &swap_total);
 				extra[16] = pending;
 				extra[17] = attempts;
 				extra[18] = F103_TEST_BOOT_MAX_ATTEMPTS;
 				extra[19] = known_good;
+				extra[20] = swap_busy;
+				extra[21] = swap_done;
+				extra[22] = swap_total;
 			}
 		}
 		break;
