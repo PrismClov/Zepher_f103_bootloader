@@ -7,7 +7,9 @@
 
 #include "runtime_usb.h"
 
+#include "app_version.h"
 #include "f103_bootloader_api.h"
+#include "f103_fw_version.h"
 #include "f103_hid_descriptor.h"
 #include "f103_iap.h"
 
@@ -22,6 +24,14 @@
 #include <zephyr/usb/usb_device.h>
 
 static const struct device *hid_device;
+
+extern const struct f103_fw_version f103_app_fw_version;
+
+#define APP_VERSION_WORD \
+	F103_FW_VERSION_WORD(f103_app_fw_version.major, \
+			     f103_app_fw_version.minor, \
+			     f103_app_fw_version.patch)
+
 static K_SEM_DEFINE(boot_request_sem, 0, 1);
 
 static K_TIMER_DEFINE(boot_request_timer, NULL, NULL);
@@ -43,6 +53,9 @@ static void send_response(uint8_t command, uint8_t sequence, uint8_t status,
 	report[3] = sequence;
 	sys_put_le32(value, &report[4]);
 	report[8 + 12] = role;
+	sys_put_le32(APP_VERSION_WORD, &report[8 + 24]);
+	report[8 + 28] = (uint8_t)f103_app_fw_version.build;
+	report[8 + 29] = 1U; /* firmware version valid */
 
 	(void)hid_int_ep_write(hid_device, report, sizeof(report), NULL);
 }

@@ -12,6 +12,7 @@
  */
 
 #include "flash_update.h"
+#include "f103_fw_version.h"
 #include "f103_iap.h"
 
 #include <stddef.h>
@@ -899,6 +900,64 @@ bool flash_update_get_boot_info(uint32_t *base, bool verify_crc)
 			*base = F103_SLOT_A_BASE;
 		}
 		return true;
+	}
+
+	return false;
+}
+
+bool flash_update_read_app_version(uint32_t *version, uint8_t *build)
+{
+	struct f103_meta meta;
+	uint8_t page = 0U;
+	uint32_t offset;
+	uint32_t remaining;
+	uint8_t buffer[256 + sizeof(struct f103_fw_version)];
+
+	if (find_latest_meta(&meta, &page) < 0) {
+		return false;
+	}
+
+	const struct f103_slot_meta *info = &meta.slot[SLOT_PRIMARY];
+
+	if (info->state != F103_SLOT_VALID) {
+		return false;
+	}
+
+	offset = F103_SLOT_A_OFFSET;
+	remaining = info->size;
+
+	while (remaining > 0U) {
+		const size_t chunk = MIN(remaining, (uint32_t)256 +
+					 (uint32_t)sizeof(struct f103_fw_version));
+		const int err = flash_read(FLASH_DEVICE, offset, buffer, chunk);
+
+		if (err < 0) {
+			return false;
+		}
+
+		for (size_t i = 0U; i + sizeof(struct f103_fw_version) <= chunk;
+		     i += 4U) {
+			const struct f103_fw_version *fw =
+				(const struct f103_fw_version *)&buffer[i];
+
+			if (fw->magic == F103_FW_VERSION_MAGIC &&
+			    fw->reserved == F103_FW_VERSION_RESERVED) {
+				if (version != NULL) {
+					*version = F103_FW_VERSION_WORD(
+						fw->major, fw->minor, fw->patch);
+				}
+				if (build != NULL) {
+					*build = (uint8_t)MIN(fw->build, 255U);
+				}
+				return true;
+			}
+		}
+
+		if (chunk <= sizeof(struct f103_fw_version)) {
+			break;
+		}
+		offset += chunk - (uint32_t)sizeof(struct f103_fw_version);
+		remaining -= chunk - (uint32_t)sizeof(struct f103_fw_version);
 	}
 
 	return false;

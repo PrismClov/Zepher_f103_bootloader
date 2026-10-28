@@ -39,6 +39,8 @@ ROLE_APPLICATION = 2
 SLOT_A_BASE = 0x08008000
 SLOT_B_BASE = 0x08013C00
 SLOT_SIZE = 46 * 1024
+FW_VERSION_MAGIC = 0x31525646
+FW_VERSION_RESERVED = 0x5A5AA5A5
 
 STATUS_TEXT = {
     0: "OK",
@@ -157,6 +159,38 @@ def device_role(extra: bytes) -> int:
     return extra[12] if len(extra) > 12 else 0
 
 
+def firmware_version(extra: bytes) -> tuple[int, int, int, int] | None:
+    """Return (major, minor, patch, build) reported by the device, if any."""
+    if len(extra) < 30 or extra[29] == 0:
+        return None
+    word = struct.unpack_from("<I", extra, 24)[0]
+    return (word >> 16, (word >> 8) & 0xFF, word & 0xFF, extra[28])
+
+
+def version_text(version: tuple[int, int, int, int] | None) -> str:
+    if version is None:
+        return "unknown"
+    major, minor, patch, build = version
+    return f"v{major}.{minor}.{patch} (build {build})"
+
+
+def image_version(data: bytes) -> tuple[int, int, int, int] | None:
+    """Find the embedded firmware version block in a .bin image."""
+    magic = struct.pack("<I", FW_VERSION_MAGIC)
+    start = 0
+    while True:
+        index = data.find(magic, start)
+        if index < 0:
+            return None
+        start = index + 1
+        if index + 16 > len(data):
+            return None
+        _magic, major, minor, patch, build, reserved = \
+            struct.unpack_from("<IHHHHI", data, index)
+        if reserved == FW_VERSION_RESERVED:
+            return (major, minor, patch, build)
+
+
 def request_bootloader(dev: hid.device, info: dict, wait: float,
                        log_cb: Callable[[str], None] | None = None
                        ) -> tuple[hid.device, dict]:
@@ -266,7 +300,10 @@ def upload(dev: hid.device, firmware: bytes, run: bool,
             log_cb,
         )
 
+    emit(f"设备当前固件：{version_text(firmware_version(info))}", log_cb)
+
     validate_image(firmware)
+    emit(f"待升级固件：{version_text(image_version(firmware))}", log_cb)
     crc = binascii.crc32(firmware) & 0xFFFFFFFF
     emit(
         f"Bootloader {version >> 16}.{version & 0xFFFF} | "
@@ -374,6 +411,7 @@ def main() -> int:
         print(f"Connected to {product}")
 
         _version, probe_extra = ping(dev)
+        print(f"Device firmware: {version_text(firmware_version(probe_extra))}")
         role = device_role(probe_extra)
         if role == ROLE_APPLICATION:
             dev, info = request_bootloader(dev, info, args.wait)

@@ -20,8 +20,12 @@ from f103_uploader import (
     USAGE_PAGE,
     VID,
     UploadError,
+    firmware_version,
+    image_version,
     perform_update,
+    ping,
     validate_image,
+    version_text,
 )
 
 
@@ -332,8 +336,9 @@ class F103UpdaterApp:
         self.firmware_image = data
         self.file_var.set(str(path))
         crc = binascii.crc32(data) & 0xFFFFFFFF
+        fw_ver = version_text(image_version(data))
         self.file_info.configure(
-            text=f"{len(data):,} B · CRC32 0x{crc:08X} · 下载固定写入 B 区",
+            text=f"{fw_ver} · {len(data):,} B · CRC32 0x{crc:08X} · 固定写入 B 区",
             foreground=MUTED,
         )
         self._append_log(f"已选择固件：{path.name}")
@@ -358,14 +363,29 @@ class F103UpdaterApp:
         else:
             info = devices[0]
             product = info.get("product_string") or "F103 USB IAP Device"
+            version = None
+
+            if not self.busy:
+                probe = hid.device()
+                try:
+                    probe.open_path(info["path"])
+                    probe.set_nonblocking(0)
+                    _value, extra = ping(probe)
+                    version = firmware_version(extra)
+                except (UploadError, OSError):
+                    version = None
+                finally:
+                    probe.close()
+
+            fw_text = version_text(version)
             if "Application" in product:
-                detail = "应用运行中 · 点击开始升级将自动切换到 Bootloader"
+                detail = f"应用运行中 · 固件 {fw_text} · 点击开始升级"
                 color = SUCCESS
             elif "Bootloader" in product:
-                detail = "Bootloader 已就绪 · 可直接下载固件"
+                detail = f"Bootloader 已就绪 · 当前固件 {fw_text} · 可直接下载"
                 color = WARNING
             else:
-                detail = "设备已连接"
+                detail = f"设备已连接 · 固件 {fw_text}"
                 color = SUCCESS
             self._set_device_status(color, product, detail)
 

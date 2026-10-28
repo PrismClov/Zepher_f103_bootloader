@@ -99,6 +99,22 @@ dist\f103_usb_bootloader.bin
 dist\app_template.bin
 ```
 
+## 固件版本
+
+应用镜像内嵌固定布局的版本块（`common/f103_fw_version.h`），版本号在
+[app_template/src/app_version.h](app_template/src/app_version.h) 中维护：
+
+```c
+#define APP_FW_VERSION_MAJOR 1
+#define APP_FW_VERSION_MINOR 0
+#define APP_FW_VERSION_PATCH 0
+#define APP_FW_VERSION_BUILD 1
+```
+
+- 应用运行中：PING 直接上报自身版本（`extra[24:30]`）。
+- Bootloader 运行中：扫描 A 区镜像中的版本块并上报，因此升级前后都能看到当前设备固件版本。
+- 首次烧录（还没有元数据）时 Bootloader 无法定位 A 区镜像，版本显示为 unknown，完成一次升级后即正常。
+
 ## 图形化上位机
 
 运行：
@@ -107,7 +123,13 @@ dist\app_template.bin
 dist\F103_USB_Updater.exe
 ```
 
-上位机会自动选择发布目录中的 `app_template.bin`，显示镜像大小和 CRC32、实时写入进度、校验结果和运行日志。点击“开始升级”即可；应用运行中也可以直接升级（会自动切换到 Bootloader）。
+上位机会自动选择发布目录中的 `app_template.bin`，并显示：
+
+- 设备当前固件版本（应用运行中直接读取；Bootloader 下扫描 A 区镜像）
+- 待升级文件的版本、大小和 CRC32
+- 实时写入进度、校验结果和运行日志
+
+点击“开始升级”即可；应用运行中也可以直接升级（会自动切换到 Bootloader）。
 
 ## 命令行升级
 

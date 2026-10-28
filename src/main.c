@@ -139,7 +139,7 @@ static void process_request(const uint8_t *request, size_t length)
 	const uint8_t *data;
 	uint8_t status = F103_IAP_OK;
 	uint32_t value = 0U;
-	uint8_t extra[24] = {0U};
+	uint8_t extra[30] = {0U};
 	bool run_after_response = false;
 	int err = 0;
 
@@ -201,6 +201,18 @@ static void process_request(const uint8_t *request, size_t length)
 				extra[20] = swap_busy;
 				extra[21] = swap_done;
 				extra[22] = swap_total;
+
+				{
+					uint32_t fw_version = 0U;
+					uint8_t fw_build = 0U;
+
+					if (flash_update_read_app_version(
+							&fw_version, &fw_build)) {
+						sys_put_le32(fw_version, &extra[24]);
+						extra[28] = fw_build;
+						extra[29] = 1U;
+					}
+				}
 			}
 		}
 		break;

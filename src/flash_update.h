@@ -22,6 +22,12 @@ int flash_update_target_slot(void);
 uint32_t flash_update_slot_base(int slot);
 uint32_t flash_update_slot_size(void);
 
+/*
+ * Read the firmware version block embedded in the slot A image.
+ * Returns false when no metadata / no version block is present.
+ */
+bool flash_update_read_app_version(uint32_t *version, uint8_t *build);
+
 /* Pending TEST / swap state of the latest metadata record. */
 bool flash_update_test_state(uint8_t *pending, uint8_t *attempts,
                              uint8_t *known_good_slot, uint8_t *swap_busy,

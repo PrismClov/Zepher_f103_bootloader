@@ -4,13 +4,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include "app_version.h"
 #include "f103_bootloader_api.h"
+#include "f103_fw_version.h"
 #include "runtime_usb.h"
 
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_REGISTER(app, LOG_LEVEL_INF);
+
+/*
+ * Version block parsed by the bootloader (slot A scan) and reported over
+ * the PING command. Keep this block at a fixed layout.
+ */
+__attribute__((used, retain, section(".rodata.fw_version")))
+const struct f103_fw_version f103_app_fw_version = {
+	.magic = F103_FW_VERSION_MAGIC,
+	.major = APP_FW_VERSION_MAJOR,
+	.minor = APP_FW_VERSION_MINOR,
+	.patch = APP_FW_VERSION_PATCH,
+	.build = APP_FW_VERSION_BUILD,
+	.reserved = F103_FW_VERSION_RESERVED,
+};
 
 int main(void)
 {
